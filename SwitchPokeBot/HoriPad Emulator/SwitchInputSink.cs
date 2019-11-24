@@ -6,10 +6,6 @@ using System.IO.Ports;
 using System.Threading;
 
 namespace SwitchPokeBot
-
-
-
-
 {
     class SwitchInputState
     {
@@ -33,24 +29,17 @@ namespace SwitchPokeBot
 
     public class SwitchInputSink : IInputSink
     {
-        public int Slot { get; set; }
-        public int Box { get; set; }
-        public int ReconnectTrades { get; set; }
-        public bool UseTimer { get; set; }
-
+    
         private SwitchInputState _state;
         private SerialPort _serialPort;
         private ConcurrentQueue<InputFrame> _queuedFrames;
         private OnUpdateCallback _callback;
         private readonly object _lock = new object();
         public InputFrame newFrame = new InputFrame();
-        public SwitchInputSink(string portName, int slot, int reconnectTrades, bool useTimer)
+        public SwitchInputSink(string portName)
         {
             _state = new SwitchInputState();
             _queuedFrames = new ConcurrentQueue<InputFrame>();
-            Slot = slot;
-            ReconnectTrades = reconnectTrades;
-            UseTimer = useTimer;
             var workerThread = new Thread(ThreadLoop);
             workerThread.Start(portName);
             Update(new InputFrame
@@ -80,6 +69,7 @@ namespace SwitchPokeBot
             Program.botRunning = true;
             int CurrentTrades = 0;
             Program.form.ApplyLog("Trying to Sync...");
+            Program.form.UpdateStatus("Connecting...");
             var portName = (string) arg;
             _serialPort = new SerialPort
             {
@@ -97,7 +87,6 @@ namespace SwitchPokeBot
                 _serialPort.Open();
             }
             catch { }
-            Program.form.UpdateStatus("Connected!");
             if (!Sync())
             {
                 Program.form.ApplyLog("Can't Sync with Console, Bot Stopped!");
@@ -109,106 +98,7 @@ namespace SwitchPokeBot
 
             var serv = new Thread(KeepAlive);
             serv.Start();
-            Thread.Sleep(100);
-            Program.form.ApplyLog("Starting Bot in 5 Seconds...");
-            SendButton(Button.B, 1000);
-            SendButton(Button.B, 1000);
-            SendButton(Button.B, 1000);
-            Thread.Sleep(1000);
-            while(false)//while (Program.botRunning)
-            {
-                try
-                {
-                    if (CurrentTrades >= ReconnectTrades)
-                    {
-                        //Reconnect if disconnected
-                        Program.form.ApplyLog("Check if still connected");
-                        // Open Y-COM
-                        Program.form.ApplyLog("Open Y-COM Menu");
-                        SendButton(Button.Y, 2000);
-
-                        //Press Plus, don't need a confirmation if not connected
-                        SendButton(Button.Plus, 2000);
-                        Program.form.ApplyLog("Wait 15 Seconds to ensure we are connected");
-                        //Wait 15 Seconds
-                        BotWait(15000);
-                        Program.form.ApplyLog("Return to Overworld");
-                        //Return to Overworld
-                        SendButton(Button.B, 1200);
-                        SendButton(Button.B, 1200);
-                        CurrentTrades = 0;
-                    }
-
-                    Program.form.ApplyLog("Open Y-COM Menu");
-                    SendButton(Button.Y, 2000);
-                    Program.form.ApplyLog("Select Suprise Trade");
-                    SendDpad(DPad.Down, 100);
-                    SendButton(Button.A, 1000);
-                    BotWait(3000);
-
-                    Program.form.ApplyLog("Select Pokemon");
-                    SelectBoxSlot(Box, Slot, 250);
-
-                    SendButton(Button.A, 2000);
-
-                    //Start a Suprise Trade, in case of Empty Slot/Egg/Bad Pokemon we press sometimes B to return to the Overworld and skip this Slot.
-                    Program.form.ApplyLog("Confirming...");
-                    SendButton(Button.A, 1000);
-                    SendButton(Button.A, 3000);
-                    SendButton(Button.A, 1000);
-                    SendButton(Button.A, 2000);
-                    SendButton(Button.A, 3000);
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-
-                    SendButton(Button.A, 1500);
-                    SendButton(Button.A, 1500);
-                    Program.form.ApplyLog("Suprise Trade started, walking around for 60 Seconds");
-
-                    for (int ui = 0; ui < 15; ui++)
-                    {
-                        SendAnalog(0, 128, 128, 128, 100); // Left
-                        SendAnalog(-20, 128, 128, 128, 100); // Right
-                    }
-
-                    Program.form.ApplyLog("Trade Finished, confirm.");
-                    SendButton(Button.Y, 1000);
-
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-
-                    // Spam A Button for 30 seconds in Case of Trade Evolution/Moves Learnings/Dex (might to be increased, needs testing)
-                    for (int ii = 0; ii < 40; ii++)
-                    {
-                        SendButton(Button.A, 1000);
-                    }
-
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-                    SendButton(Button.B, 1000);
-
-                    Program.form.ApplyLog("Start from beginning");
-
-                    if (Slot > 29)
-                    {
-                        Program.form.ApplyLog("Change Box, Reset Slot!");
-                        Box++;
-                        Slot = 0;
-                    }
-                    else
-                    {
-                        Slot++;
-                    }
-                }
-                catch
-                {
-                    Program.form.ApplyLog("Bot lost connection to Host, check your cable connected!");
-                    Program.form.UpdateStatus("Disconnected! | Can't connect to Host!");
-                }
-            }
+           
            // _serialPort.Dispose();
            // _serialPort.Close();
             Program.form.UpdateStatus("Disconnected!");
@@ -310,84 +200,6 @@ namespace SwitchPokeBot
             }
         }
 
-        public void SelectBoxSlot(int Box, int Slot, int Delay)
-        {
-            if (Program.botRunning || _serialPort.IsOpen)
-            {
-                int Right = 0;
-                int Down = 0;
-                bool BoxChange = false;
-                Program.form.ApplyLog("Box: " + Box + ", Slot: " + Slot);
-
-                if (Slot >= 30)
-                {
-                    BoxChange = true;
-                }
-
-                // Bos Switch
-                if (BoxChange)
-                {
-                    Program.form.ApplyLog("ChangeBox...");
-                    SendDpad(DPad.Up, 250);
-                    SendDpad(DPad.Right, 250);
-                    SendDpad(DPad.Down, 250);
-                    Slot = 0;
-                }
-
-                // Select wanted Slot, Down Side
-                if (Slot > 5 && Slot < 12)
-                {
-                    Down = 1;
-                }
-                else if (Slot > 11 && Slot < 18)
-                {
-                    Down = 2;
-                }
-                else if (Slot > 17 && Slot < 24)
-                {
-                    Down = 3;
-                }
-                else if (Slot > 23 && Slot < 30)
-                {
-                    Down = 4;
-                }
-
-                // Select wanted Slot, Right Side
-
-                Right = Slot;
-
-                if (Slot > 5 && Slot < 12)
-                {
-                    Right -= 6;
-                }
-
-                if (Slot > 11 && Slot < 18)
-                {
-                    Right -= 12;
-                }
-
-                if (Slot > 17 && Slot < 24)
-                {
-                    Right -= 18;
-                }
-
-                if (Slot > 23 && Slot < 30)
-                {
-                    Right -= 24;
-                }
-
-                for (int DownDirection = 0; DownDirection < Down; DownDirection++)
-                {
-                    SendDpad(DPad.Down, 300);
-                }
-
-                for (int RightDirection = 0; RightDirection < Right; RightDirection++)
-                {
-                    SendDpad(DPad.Right, 300);
-                }
-                BotWait(Delay);
-            }
-        }
 
 
         public void Reset()

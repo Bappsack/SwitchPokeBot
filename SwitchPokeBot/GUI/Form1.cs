@@ -10,6 +10,8 @@ namespace SwitchPokeBot
     {
         private string comPort = string.Empty;
         public bool Use_YT_Countdown { get; set; }
+        private SwitchPokeBot.Bot.Suprise_Bot suprise = new Bot.Suprise_Bot();
+
         public Form1()
         {
             InitializeComponent();
@@ -68,9 +70,8 @@ namespace SwitchPokeBot
                 {
 
                     Program.botRunning = true;
-                    var sink = new SwitchInputSink(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked);
-                    SwitchPokeBot.Bot.Suprise_Bot suprise = new Bot.Suprise_Bot();
-                    suprise.test();
+                    // var sink = new SwitchInputSink(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked);
+                    suprise.RunBot(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked);
                     ApplyLog($"Bot Started!");
                 }
                 else
@@ -100,19 +101,6 @@ namespace SwitchPokeBot
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-            RefreshCOMPorts();
-
-            for (int i = 0; i < 30; i++)
-            {
-                comboBox2.Items.Add(i);
-            }
-            comboBox2.Text = "0";
-
-        }
-
         private void RefreshCOMPorts()
         {
             comboBox1.Items.Clear();
@@ -125,18 +113,38 @@ namespace SwitchPokeBot
 
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            RefreshCOMPorts();
+
+            for (int i = 0; i < 30; i++)
+            {
+                comboBox2.Items.Add(i);
+            }
+            comboBox2.Text = "0";
+
+
+            for (int i = 0; i < 101; i++)
+            {
+                comboBox3.Items.Add(i);
+            }
+
+            checkBox2.Checked = Properties.Settings.Default.UseSync;
+            comboBox2.Text = Properties.Settings.Default.StartSlot;
+            comboBox3.Text = Properties.Settings.Default.ReconnectAfter;
+            
+        }
 
         private void Form1_Closed(object sender, FormClosedEventArgs e)
         {
+            Properties.Settings.Default.UseSync = checkBox2.Checked;
+            Properties.Settings.Default.ReconnectAfter = comboBox3.Text;
+            Properties.Settings.Default.StartSlot = comboBox2.Text;
+            Properties.Settings.Default.Save();
+
             Program.botRunning = false;
             Environment.Exit(0);
         }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(@"https://github.com/wchill/SwitchInputEmulator");
-        }
-
-
     }
 }
