@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace InputServer
+namespace SwitchPokeBot
 {
     partial class Form1
     {

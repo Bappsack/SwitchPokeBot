@@ -5,7 +5,11 @@ using System.Text;
 using System.IO.Ports;
 using System.Threading;
 
-namespace InputServer
+namespace SwitchPokeBot
+
+
+
+
 {
     class SwitchInputState
     {

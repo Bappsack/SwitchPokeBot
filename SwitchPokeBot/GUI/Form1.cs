@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace InputServer
+namespace SwitchPokeBot
 {
     public partial class Form1 : Form
     {
@@ -73,10 +66,10 @@ namespace InputServer
             {
                 if (!Program.botRunning)
                 {
-                  
+
                     Program.botRunning = true;
-                    var sink = new SwitchInputSink(comPort,Convert.ToInt32(comboBox2.Text),Convert.ToInt32(comboBox3.Text),checkBox2.Checked);
-                    InputServer.Bot.Suprise_Bot suprise = new Bot.Suprise_Bot();
+                    var sink = new SwitchInputSink(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked);
+                    SwitchPokeBot.Bot.Suprise_Bot suprise = new Bot.Suprise_Bot();
                     suprise.test();
                     ApplyLog($"Bot Started!");
                 }
@@ -112,7 +105,7 @@ namespace InputServer
 
             RefreshCOMPorts();
 
-            for(int i = 0;i< 30;i++)
+            for (int i = 0; i < 30; i++)
             {
                 comboBox2.Items.Add(i);
             }
@@ -144,6 +137,6 @@ namespace InputServer
             Process.Start(@"https://github.com/wchill/SwitchInputEmulator");
         }
 
-     
+
     }
 }

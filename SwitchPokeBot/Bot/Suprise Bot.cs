@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InputServer.Bot
+namespace SwitchPokeBot.Bot
 {
     class Suprise_Bot
     {

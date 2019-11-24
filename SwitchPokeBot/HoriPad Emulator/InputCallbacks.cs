@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using WebSocketSharp.Server;
 
-namespace InputServer
+namespace SwitchPokeBot
+
+
+
 {
     public delegate void OnOpenCallback(string id);
 

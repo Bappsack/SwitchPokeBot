@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InputServer
+namespace SwitchPokeBot
 {
     [Flags]
     public enum Button

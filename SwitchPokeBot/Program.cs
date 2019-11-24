@@ -11,7 +11,7 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 using System.Windows.Forms;
 
-namespace InputServer
+namespace SwitchPokeBot
 {
 
     class Program

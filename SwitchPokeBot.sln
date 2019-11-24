@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pokemon Bot", "InputServer\Pokemon Bot.csproj", "{9466FA25-69F4-40E1-ABCA-64EE4D63DC5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwitchPokeBot", "SwitchPokeBot\SwitchPokeBot.csproj", "{9466FA25-69F4-40E1-ABCA-64EE4D63DC5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
