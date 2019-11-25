@@ -1,11 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SwitchPokeBot.Bot
 {
@@ -28,7 +23,7 @@ namespace SwitchPokeBot.Bot
         {
             Port = port;
             Slot = slot;
-            if(Slot > 0) { Slot--; }
+            if (Slot > 0) { Slot--; }
             ReconnectAfter = reconnectAfter;
             UseSync = useSync;
             ShowPokemon = showPokemon;
@@ -50,7 +45,7 @@ namespace SwitchPokeBot.Bot
 
             Input = new SwitchInputSink(Port);
             Input.BotWait(3000);
-            if(UseSync)
+            if (UseSync)
             {
                 Program.form.ApplyLog("Bot Sync is Enabled!");
             }
@@ -58,13 +53,13 @@ namespace SwitchPokeBot.Bot
             Input.SendButton(Button.B, 1000);
             Input.SendButton(Button.B, 1000);
             Input.SendButton(Button.B, 1000);
-            
+
             while (Program.botRunning)
             {
                 try
                 {
 
-                  
+
                     if (CurrentTrades >= ReconnectAfter)
                     {
                         //Reconnect if disconnected
@@ -97,7 +92,7 @@ namespace SwitchPokeBot.Bot
                     SelectBoxSlot(Box, Slot, 250);
 
                     Input.SendButton(Button.A, 2000);
-                    
+
                     if (ShowPokemon)
                     {
                         Program.form.ApplyLog("Show Pokemon is enabled, wait 15 Seconds...");
@@ -108,7 +103,7 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 1000);
                     Input.SendButton(Button.A, 3000);
 
-                    if (UseSync) 
+                    if (UseSync)
                     {
                         Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
                         BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
@@ -116,16 +111,16 @@ namespace SwitchPokeBot.Bot
                         Program.form.ApplyLog("Waiting for other Bots...");
                         Bots++;
                         Registry.SetValue(RegistyKey, RegistyBotReadyCount, Bots.ToString(), RegistryValueKind.String);
-                       
+
 
                         while (Bots < BotsAmount)
                         {
                             // Get Registry Values for Bots
                             Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
                             BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
-                            
+
                             Program.form.UpdateStatus("Waiting for other Bots...");
-                            Input.BotWait(new Random().Next(50,150));
+                            Input.BotWait(new Random().Next(50, 150));
                         }
                         Program.form.ApplyLog("Bots are Ready!");
                     }
@@ -142,7 +137,7 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 1500);
                     Program.form.ApplyLog("Wait until Trade is finished, prevent auto disconnect by walking arround");
 
-                    for (int BypassDisconnect = 0; BypassDisconnect < 40; BypassDisconnect++)
+                    for (int BypassDisconnect = 0; BypassDisconnect < 30; BypassDisconnect++)
                     {
                         Input.SendAnalog(0, 128, 128, 128, 100); // Left
                         Input.SendAnalog(-20, 128, 128, 128, 100); // Right
@@ -150,6 +145,12 @@ namespace SwitchPokeBot.Bot
 
                     Program.form.ApplyLog("Pokemon has been arrived, confirm.");
                     Input.SendButton(Button.Y, 1000);
+                    Input.BotWait(1000);
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Input.SendButton(Button.A, 1000);
+                    }
 
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
@@ -195,7 +196,7 @@ namespace SwitchPokeBot.Bot
                 int Right = 0;
                 int Down = 0;
                 bool BoxChange = false;
-                Program.form.ApplyLog("Box: " + (Box +1) + ", Slot: " + (Slot +1));
+                Program.form.ApplyLog("Box: " + (Box + 1) + ", Slot: " + (Slot + 1));
 
                 if (Slot >= 30)
                 {

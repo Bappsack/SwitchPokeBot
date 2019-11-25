@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
@@ -134,7 +132,7 @@ namespace SwitchPokeBot
             checkBox2.Checked = Properties.Settings.Default.UseSync;
             comboBox2.Text = Properties.Settings.Default.StartSlot;
             comboBox3.Text = Properties.Settings.Default.ReconnectAfter;
-            
+
         }
 
         private void Form1_Closed(object sender, FormClosedEventArgs e)
@@ -159,17 +157,17 @@ namespace SwitchPokeBot
                     this.Invoke(new Action<bool>(UpdateUSBDisplay), new object[] { Status });
                     return;
                 }
-                if(Status) 
+                if (Status)
                 {
                     pictureBox1.Image = Properties.Resources.usb_connected_xxl;
                     pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-                    UpdateStatus("Connected!"); 
+                    UpdateStatus("Connected!");
                 }
-                else 
+                else
                 {
                     pictureBox1.Image = Properties.Resources.usb_disconnected_xxl;
                     pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-                    UpdateStatus("Disconnected!"); 
+                    UpdateStatus("Disconnected!");
                 }
 
             }

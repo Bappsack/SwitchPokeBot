@@ -15,7 +15,7 @@ namespace SwitchPokeBot
         public byte LeftY { get; set; }
         public byte RightX { get; set; }
         public byte RightY { get; set; }
-        
+
         public bool Equals(SwitchInputState other)
         {
             return Buttons == other.Buttons &&
@@ -29,7 +29,7 @@ namespace SwitchPokeBot
 
     public class SwitchInputSink : IInputSink
     {
-    
+
         private SwitchInputState _state;
         private SerialPort _serialPort;
         private ConcurrentQueue<InputFrame> _queuedFrames;
@@ -70,7 +70,7 @@ namespace SwitchPokeBot
             int CurrentTrades = 0;
             Program.form.ApplyLog("Trying to connect to Console...");
             Program.form.UpdateStatus("Connecting...");
-            var portName = (string) arg;
+            var portName = (string)arg;
             _serialPort = new SerialPort
             {
                 PortName = portName,
@@ -112,38 +112,38 @@ namespace SwitchPokeBot
 
         public void KeepAlive()
         {
-            while(Program.botRunning)
+            while (Program.botRunning)
             {
-                    if (newFrame.Wait <= 0)
+                if (newFrame.Wait <= 0)
+                {
+                    if (_queuedFrames.TryDequeue(out var queuedFrame))
                     {
-                        if (_queuedFrames.TryDequeue(out var queuedFrame))
-                        {
-                            newFrame = queuedFrame;
-                            ApplyFrameToState(newFrame);
-                            _callback?.Invoke(GetStateStr());
-                            var packet = TranslateState(_state);
-                            _serialPort.Write(packet, 0, packet.Length);
-                        }
+                        newFrame = queuedFrame;
+                        ApplyFrameToState(newFrame);
+                        _callback?.Invoke(GetStateStr());
+                        var packet = TranslateState(_state);
+                        _serialPort.Write(packet, 0, packet.Length);
                     }
-                    else
-                    {
-                        newFrame.Wait--;
+                }
+                else
+                {
+                    newFrame.Wait--;
                     Reset();
-                    }
+                }
 
-                    var resp = _serialPort.ReadByte();
-                    if (resp == 0x92)
+                var resp = _serialPort.ReadByte();
+                if (resp == 0x92)
+                {
+                    Console.Error.WriteLine("NACK");
+                    if (!Sync())
                     {
-                        Console.Error.WriteLine("NACK");
-                        if (!Sync())
-                        {
-                            throw new Exception("Unable to sync after NACK");
-                        }
+                        throw new Exception("Unable to sync after NACK");
                     }
-                    else if (resp != 0x90)
-                    {
-                        // Unknown response
-                    }
+                }
+                else if (resp != 0x90)
+                {
+                    // Unknown response
+                }
                 Thread.Sleep(10);
             }
 
@@ -154,11 +154,11 @@ namespace SwitchPokeBot
         }
 
 
-        public void SendButton(Button button,int Delay)
+        public void SendButton(Button button, int Delay)
         {
             newFrame = new InputFrame();
             newFrame.PressedButtons = button;
-           // newFrame.Wait = 1;
+            // newFrame.Wait = 1;
             Update(newFrame);
             BotWait(150);
             newFrame.PressedButtons = Button.None;
@@ -192,7 +192,7 @@ namespace SwitchPokeBot
                 newFrame.RightX = (byte)RX;
                 newFrame.RightY = (byte)RY;
                 Update(newFrame);
-                BotWait(new Random().Next(800,1000));
+                BotWait(new Random().Next(800, 1000));
                 newFrame.LeftX = 128;
                 newFrame.LeftY = 128;
                 newFrame.RightX = 128;
@@ -236,16 +236,16 @@ namespace SwitchPokeBot
 
         public void BotWait(int Delay)
         {
-            if(Program.botRunning)
+            if (Program.botRunning)
             {
                 Thread.Sleep(Delay);
             }
         }
-            
+
         public string GetStateStr()
         {
             return
-                $"{(int) _state.Buttons} {(int) _state.DPad} {_state.LeftX} {_state.LeftY} {_state.RightX} {_state.RightY}";
+                $"{(int)_state.Buttons} {(int)_state.DPad} {_state.LeftX} {_state.LeftY} {_state.RightX} {_state.RightY}";
         }
 
         public void AddStateListener(OnUpdateCallback cb)
@@ -256,9 +256,9 @@ namespace SwitchPokeBot
         private bool Sync()
         {
             try
-            { 
-            var sendBytes = new byte[] { 0xff, 0x33, 0xcc };
-            var recvBytes = new byte[] { 0xff, 0xcc, 0x33 };
+            {
+                var sendBytes = new byte[] { 0xff, 0x33, 0xcc };
+                var recvBytes = new byte[] { 0xff, 0xcc, 0x33 };
 
                 for (var i = 0; i < 100; i++)
                 {
@@ -333,9 +333,9 @@ namespace SwitchPokeBot
         private byte[] TranslateState(SwitchInputState state)
         {
             var buf = new byte[9];
-            buf[0] = (byte) (((int) state.Buttons & 0xFF00) >> 8);
-            buf[1] = (byte) ((int) state.Buttons & 0xFF);
-            buf[2] = (byte) state.DPad;
+            buf[0] = (byte)(((int)state.Buttons & 0xFF00) >> 8);
+            buf[1] = (byte)((int)state.Buttons & 0xFF);
+            buf[2] = (byte)state.DPad;
             buf[3] = state.LeftX;
             buf[4] = state.LeftY;
             buf[5] = state.RightX;
