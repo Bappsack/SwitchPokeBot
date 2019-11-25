@@ -68,7 +68,7 @@ namespace SwitchPokeBot
         {
             Program.botRunning = true;
             int CurrentTrades = 0;
-            Program.form.ApplyLog("Trying to Sync...");
+            Program.form.ApplyLog("Trying to connect to Console...");
             Program.form.UpdateStatus("Connecting...");
             var portName = (string) arg;
             _serialPort = new SerialPort
@@ -86,22 +86,23 @@ namespace SwitchPokeBot
             {
                 _serialPort.Open();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog("Can't open Port: " + portName);
+            }
             if (!Sync())
             {
-                Program.form.ApplyLog("Can't Sync with Console, Bot Stopped!");
-                Program.form.UpdateStatus("Disconnected! | Can't connect to Host!");
+                Program.form.ApplyLog("Can't connect to Console, Bot Stopped!");
+                Program.form.UpdateStatus("Disconnected! | Can't connect to Console!");
                 // throw new Exception("Unable to sync");
                 return;
             }
-            Program.form.ApplyLog("Synced");
+            Program.form.UpdateStatus("Connected!");
+            Program.form.UpdateUSBDisplay(true);
+            Program.form.ApplyLog("Connected to Console successfully!");
 
             var serv = new Thread(KeepAlive);
             serv.Start();
-           
-           // _serialPort.Dispose();
-           // _serialPort.Close();
-            Program.form.UpdateStatus("Disconnected!");
         }
 
         public void Stop()
@@ -143,12 +144,13 @@ namespace SwitchPokeBot
                     {
                         // Unknown response
                     }
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             _serialPort.Dispose();
             _serialPort.Close();
             Program.form.UpdateStatus("Disconnected!");
+            Program.form.UpdateUSBDisplay(false);
         }
 
 
@@ -190,7 +192,7 @@ namespace SwitchPokeBot
                 newFrame.RightX = (byte)RX;
                 newFrame.RightY = (byte)RY;
                 Update(newFrame);
-                BotWait(1500);
+                BotWait(new Random().Next(800,1000));
                 newFrame.LeftX = 128;
                 newFrame.LeftY = 128;
                 newFrame.RightX = 128;

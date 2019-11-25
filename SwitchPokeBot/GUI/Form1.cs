@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
@@ -70,8 +71,7 @@ namespace SwitchPokeBot
                 {
 
                     Program.botRunning = true;
-                    // var sink = new SwitchInputSink(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked);
-                    suprise.RunBot(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked);
+                    suprise.RunBot(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked, checkBox1.Checked);
                     ApplyLog($"Bot Started!");
                 }
                 else
@@ -115,21 +115,22 @@ namespace SwitchPokeBot
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            UpdateUSBDisplay(false);
             RefreshCOMPorts();
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 1; i < 31; i++)
             {
                 comboBox2.Items.Add(i);
             }
             comboBox2.Text = "0";
 
 
-            for (int i = 0; i < 101; i++)
+            for (int i = 0; i < 961; i++)
             {
                 comboBox3.Items.Add(i);
             }
 
+            checkBox1.Checked = Properties.Settings.Default.ShowPokemon;
             checkBox2.Checked = Properties.Settings.Default.UseSync;
             comboBox2.Text = Properties.Settings.Default.StartSlot;
             comboBox3.Text = Properties.Settings.Default.ReconnectAfter;
@@ -138,13 +139,46 @@ namespace SwitchPokeBot
 
         private void Form1_Closed(object sender, FormClosedEventArgs e)
         {
+            ApplyLog("Saving...");
             Properties.Settings.Default.UseSync = checkBox2.Checked;
+            Properties.Settings.Default.ShowPokemon = checkBox1.Checked;
             Properties.Settings.Default.ReconnectAfter = comboBox3.Text;
             Properties.Settings.Default.StartSlot = comboBox2.Text;
             Properties.Settings.Default.Save();
 
             Program.botRunning = false;
             Environment.Exit(0);
+        }
+
+        public void UpdateUSBDisplay(bool Status)
+        {
+            try
+            {
+                if (InvokeRequired)
+                {
+                    this.Invoke(new Action<bool>(UpdateUSBDisplay), new object[] { Status });
+                    return;
+                }
+                if(Status) 
+                {
+                    pictureBox1.Image = Properties.Resources.usb_connected_xxl;
+                    pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+                    UpdateStatus("Connected!"); 
+                }
+                else 
+                {
+                    pictureBox1.Image = Properties.Resources.usb_disconnected_xxl;
+                    pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+                    UpdateStatus("Disconnected!"); 
+                }
+
+            }
+            catch { }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
         }
     }
 }

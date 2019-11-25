@@ -58,5 +58,17 @@ namespace SwitchPokeBot.Properties {
                 this["StartSlot"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowPokemon {
+            get {
+                return ((bool)(this["ShowPokemon"]));
+            }
+            set {
+                this["ShowPokemon"] = value;
+            }
+        }
     }
 }

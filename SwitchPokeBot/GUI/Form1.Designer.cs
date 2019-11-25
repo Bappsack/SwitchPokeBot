@@ -53,6 +53,8 @@ namespace SwitchPokeBot
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -62,6 +64,7 @@ namespace SwitchPokeBot
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -112,7 +115,7 @@ namespace SwitchPokeBot
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 112);
+            this.button2.Location = new System.Drawing.Point(160, 6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(148, 23);
             this.button2.TabIndex = 2;
@@ -139,6 +142,7 @@ namespace SwitchPokeBot
             this.button4.TabIndex = 2;
             this.button4.Text = "Clear Log";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // richTextBox1
             // 
@@ -183,7 +187,7 @@ namespace SwitchPokeBot
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(6, 141);
+            this.button3.Location = new System.Drawing.Point(160, 35);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(148, 23);
             this.button3.TabIndex = 3;
@@ -197,7 +201,7 @@ namespace SwitchPokeBot
             this.groupBox3.Controls.Add(this.comboBox2);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(148, 100);
+            this.groupBox3.Size = new System.Drawing.Size(148, 57);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Trade Settings";
@@ -221,7 +225,7 @@ namespace SwitchPokeBot
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Location = new System.Drawing.Point(132, 7);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(176, 100);
+            this.groupBox4.Size = new System.Drawing.Size(176, 53);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Reconnect Settings";
@@ -255,10 +259,11 @@ namespace SwitchPokeBot
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.checkBox1);
             this.groupBox5.Controls.Add(this.checkBox2);
             this.groupBox5.Location = new System.Drawing.Point(6, 7);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(120, 53);
+            this.groupBox5.Size = new System.Drawing.Size(120, 84);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Misc";
@@ -268,9 +273,9 @@ namespace SwitchPokeBot
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(6, 23);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(104, 17);
+            this.checkBox2.Size = new System.Drawing.Size(91, 17);
             this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Use Syncronicer";
+            this.checkBox2.Text = "Use Bot Sync";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
@@ -283,12 +288,32 @@ namespace SwitchPokeBot
             this.tabPage3.Text = "Log";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 46);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(101, 17);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.Text = "Show Pokemon";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(208, 8);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(99, 72);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(337, 357);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
@@ -309,6 +334,7 @@ namespace SwitchPokeBot
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,5 +367,7 @@ namespace SwitchPokeBot
         private ComboBox comboBox3;
         private Label label4;
         private Label label3;
+        private CheckBox checkBox1;
+        private PictureBox pictureBox1;
     }
 }

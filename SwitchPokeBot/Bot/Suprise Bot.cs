@@ -19,17 +19,19 @@ namespace SwitchPokeBot.Bot
         private int Slot { get; set; }
         private int ReconnectAfter { get; set; }
         private bool UseSync { get; set; }
-
+        private bool ShowPokemon { get; set; }
 
 
         private SwitchInputSink Input;
 
-        public void RunBot(string port, int slot, int reconnectAfter, bool useSync)
+        public void RunBot(string port, int slot, int reconnectAfter, bool useSync, bool showPokemon)
         {
             Port = port;
             Slot = slot;
+            if(Slot > 0) { Slot--; }
             ReconnectAfter = reconnectAfter;
             UseSync = useSync;
+            ShowPokemon = showPokemon;
 
             var worker = new Thread(Bot);
             worker.Start();
@@ -47,7 +49,7 @@ namespace SwitchPokeBot.Bot
             int BotsAmount = 0;
 
             Input = new SwitchInputSink(Port);
-            Input.BotWait(1000);
+            Input.BotWait(3000);
             if(UseSync)
             {
                 Program.form.ApplyLog("Bot Sync is Enabled!");
@@ -61,10 +63,12 @@ namespace SwitchPokeBot.Bot
             {
                 try
                 {
+
+                  
                     if (CurrentTrades >= ReconnectAfter)
                     {
                         //Reconnect if disconnected
-                        Program.form.ApplyLog("Check if still connected");
+                        Program.form.ApplyLog("Auto Reconnect is enabled, reconnecting if disconnected...");
                         // Open Y-COM
                         Program.form.ApplyLog("Open Y-COM Menu");
                         Input.SendButton(Button.Y, 2000);
@@ -74,12 +78,13 @@ namespace SwitchPokeBot.Bot
                         Program.form.ApplyLog("Wait 15 Seconds to ensure we are connected");
                         //Wait 15 Seconds
                         Input.BotWait(15000);
-                        Program.form.ApplyLog("Return to Overworld");
+                        Program.form.ApplyLog("Reconnected! Return to Overworld");
                         //Return to Overworld
-                        Input.SendButton(Button.B, 1200);
-                        Input.SendButton(Button.B, 1200);
+                        Input.SendButton(Button.B, 1500);
+                        Input.SendButton(Button.B, 1500);
                         CurrentTrades = 0;
                     }
+
 
                     Program.form.ApplyLog("Open Y-COM Menu");
                     Input.SendButton(Button.Y, 2000);
@@ -92,21 +97,26 @@ namespace SwitchPokeBot.Bot
                     SelectBoxSlot(Box, Slot, 250);
 
                     Input.SendButton(Button.A, 2000);
-
+                    
+                    if (ShowPokemon)
+                    {
+                        Program.form.ApplyLog("Show Pokemon is enabled, wait 15 Seconds...");
+                        Input.BotWait(new Random().Next(13000, 15000));
+                    }
                     //Start a Suprise Trade, in case of Empty Slot/Egg/Bad Pokemon we press sometimes B to return to the Overworld and skip this Slot.
                     Program.form.ApplyLog("Confirming...");
                     Input.SendButton(Button.A, 1000);
                     Input.SendButton(Button.A, 3000);
-                    Input.SendButton(Button.A, 1000);
 
                     if (UseSync) 
                     {
-                        // Increase BotReady Count
-                        Program.form.ApplyLog("Check if Bots are Ready...");
-                        Bots++;
-                        Registry.SetValue(RegistyKey, RegistyBotReadyCount, Bots.ToString(), RegistryValueKind.String);
                         Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
                         BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
+                        // Increase BotReady Count
+                        Program.form.ApplyLog("Waiting for other Bots...");
+                        Bots++;
+                        Registry.SetValue(RegistyKey, RegistyBotReadyCount, Bots.ToString(), RegistryValueKind.String);
+                       
 
                         while (Bots < BotsAmount)
                         {
@@ -115,14 +125,14 @@ namespace SwitchPokeBot.Bot
                             BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
                             
                             Program.form.UpdateStatus("Waiting for other Bots...");
-                            Input.BotWait(100);
+                            Input.BotWait(new Random().Next(50,150));
                         }
                         Program.form.ApplyLog("Bots are Ready!");
                     }
-
+                    Input.SendButton(Button.A, 1000);
                     Input.SendButton(Button.A, 2000);
                     Input.SendButton(Button.A, 3000);
-                    Program.form.ApplyLog("Suprise Trade Started, wait 5 seconds...");
+                    Program.form.ApplyLog("Suprise Trade Started, wait 10 seconds...");
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
@@ -130,22 +140,22 @@ namespace SwitchPokeBot.Bot
 
                     Input.SendButton(Button.A, 1500);
                     Input.SendButton(Button.A, 1500);
-                    Program.form.ApplyLog("Suprise Trade started, walking around for 60 Seconds");
+                    Program.form.ApplyLog("Wait until Trade is finished, prevent auto disconnect by walking arround");
 
-                    for (int ui = 0; ui < 15; ui++)
+                    for (int BypassDisconnect = 0; BypassDisconnect < 40; BypassDisconnect++)
                     {
                         Input.SendAnalog(0, 128, 128, 128, 100); // Left
                         Input.SendAnalog(-20, 128, 128, 128, 100); // Right
                     }
 
-                    Program.form.ApplyLog("Trade Finished, confirm.");
+                    Program.form.ApplyLog("Pokemon has been arrived, confirm.");
                     Input.SendButton(Button.Y, 1000);
 
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
 
-                    // Spam A Button for 30 seconds in Case of Trade Evolution/Moves Learnings/Dex (might to be increased, needs testing)
+                    // Spam A Button for 40 seconds in Case of Trade Evolution/Moves Learnings/Dex
                     for (int ii = 0; ii < 40; ii++)
                     {
                         Input.SendButton(Button.A, 1000);
@@ -154,10 +164,10 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
                     Input.SendButton(Button.B, 1000);
+                    Program.form.ApplyLog("Trade was Successfull!");
 
-                    if (Slot > 29)
+                    if (Slot >= 29)
                     {
-                        Program.form.ApplyLog("Change Box, Reset Slot!");
                         Box++;
                         Slot = 0;
                     }
@@ -165,6 +175,7 @@ namespace SwitchPokeBot.Bot
                     {
                         Slot++;
                     }
+                    CurrentTrades++;
                 }
                 catch
                 {
@@ -184,7 +195,7 @@ namespace SwitchPokeBot.Bot
                 int Right = 0;
                 int Down = 0;
                 bool BoxChange = false;
-                Program.form.ApplyLog("Box: " + Box + ", Slot: " + Slot);
+                Program.form.ApplyLog("Box: " + (Box +1) + ", Slot: " + (Slot +1));
 
                 if (Slot >= 30)
                 {
@@ -194,7 +205,7 @@ namespace SwitchPokeBot.Bot
                 // Bos Switch
                 if (BoxChange)
                 {
-                    Program.form.ApplyLog("ChangeBox...");
+                    Program.form.ApplyLog("Changing Box...");
                     Input.SendDpad(DPad.Up, 250);
                     Input.SendDpad(DPad.Right, 250);
                     Input.SendDpad(DPad.Down, 250);
