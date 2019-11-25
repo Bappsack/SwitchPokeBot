@@ -58,8 +58,7 @@ namespace SwitchPokeBot.Bot
             {
                 try
                 {
-
-
+                  
                     if (CurrentTrades >= ReconnectAfter)
                     {
                         //Reconnect if disconnected
@@ -137,13 +136,14 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 1500);
                     Program.form.ApplyLog("Wait until Trade is finished, prevent auto disconnect by walking arround");
 
-                    for (int BypassDisconnect = 0; BypassDisconnect < 30; BypassDisconnect++)
+                    for (int BypassDisconnect = 0; BypassDisconnect < 35; BypassDisconnect++)
                     {
                         Input.SendAnalog(0, 128, 128, 128, 100); // Left
                         Input.SendAnalog(-20, 128, 128, 128, 100); // Right
                     }
+                    Input.BotWait(1000);
 
-                    Program.form.ApplyLog("Pokemon has been arrived, confirm.");
+                    Program.form.ApplyLog("Pokemon has been arrived, bypass Trade Evolution...");
                     Input.SendButton(Button.Y, 1000);
                     Input.BotWait(1000);
 
@@ -167,10 +167,10 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.B, 1000);
                     Program.form.ApplyLog("Trade was Successfull!");
 
-                    if (Slot >= 29)
+                    if (Slot > 29)
                     {
                         Box++;
-                        Slot = 0;
+                        Slot = 1;
                     }
                     else
                     {
@@ -196,7 +196,6 @@ namespace SwitchPokeBot.Bot
                 int Right = 0;
                 int Down = 0;
                 bool BoxChange = false;
-                Program.form.ApplyLog("Box: " + (Box + 1) + ", Slot: " + (Slot + 1));
 
                 if (Slot >= 30)
                 {
@@ -207,11 +206,13 @@ namespace SwitchPokeBot.Bot
                 if (BoxChange)
                 {
                     Program.form.ApplyLog("Changing Box...");
-                    Input.SendDpad(DPad.Up, 250);
-                    Input.SendDpad(DPad.Right, 250);
-                    Input.SendDpad(DPad.Down, 250);
+                    Input.SendButton(Button.R, 250);
+                    //Input.SendDpad(DPad.Up, 250);
+                    //Input.SendDpad(DPad.Right, 250);
+                    //Input.SendDpad(DPad.Down, 250);
                     Slot = 0;
                 }
+                Program.form.ApplyLog("Box: " + (Box + 1) + ", Slot: " + (Slot + 1));
 
                 // Select wanted Slot, Down Side
                 if (Slot > 5 && Slot < 12)
