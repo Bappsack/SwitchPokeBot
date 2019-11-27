@@ -95,6 +95,7 @@ namespace SwitchPokeBot
                 Program.form.ApplyLog("Can't connect to Console, Bot Stopped!");
                 Program.form.UpdateStatus("Disconnected! | Can't connect to Console!");
                 // throw new Exception("Unable to sync");
+                Program.botRunning = false;
                 return;
             }
             Program.form.UpdateStatus("Connected!");
