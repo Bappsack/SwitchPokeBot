@@ -11,15 +11,15 @@ a Bot for Pokémon Sword and Shield on Nintendo Switch
 - Start from a specifc Slot.
 - Reconnects after X amount of Trades.
 - Syncable multiple Bots via Registry read/writes (needs a external Timer program).
-- Bypassed auto. 'idle' disconnects.
+- Bypasses auto. 'idle' disconnects.
 
 
 
 # Requirements
 
 - An Arduino/Teensy, tested with ATMega16u2 and ATMega32u4
-- An UART USB Controller
-- a hacked Switch for filling your Boxes ;)
+- An UART USB Controller (make sure u install the right UART Driver for yor product)
+- some Jumper cables
 
 
 
