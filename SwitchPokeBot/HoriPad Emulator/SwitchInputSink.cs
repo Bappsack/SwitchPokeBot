@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
 using System.IO.Ports;
 using System.Threading;
 
@@ -96,8 +94,10 @@ namespace SwitchPokeBot
                 Program.form.UpdateStatus("Disconnected! | Can't connect to Console!");
                 // throw new Exception("Unable to sync");
                 Program.botRunning = false;
+                Program.botConnected = false;
                 return;
             }
+            Program.botConnected = true;
             Program.form.UpdateStatus("Connected!");
             Program.form.UpdateUSBDisplay(true);
             Program.form.ApplyLog("Connected to Console successfully!");

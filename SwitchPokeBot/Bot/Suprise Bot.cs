@@ -45,22 +45,38 @@ namespace SwitchPokeBot.Bot
             bool FirstStarted = true;
 
             Input = new SwitchInputSink(Port);
-            Input.BotWait(3000);
-            if (UseSync)
+            int ConnectAttemps = 0;
+            while (!Program.botConnected)
             {
-                Program.form.ApplyLog("Bot Sync is Enabled!");
-            } 
-            Program.form.ApplyLog("Starting Bot in 5 Seconds...");
-            Input.SendButton(Button.B, 1000);
-            Input.SendButton(Button.B, 1000);
-            Input.SendButton(Button.B, 1000);
+                if (ConnectAttemps > 5)
+                {
+                    Program.form.ApplyLog("Can't connect to Device!");
+                    Program.form.UpdateStatus("Failed to connect to Console!");
+                    Program.botRunning = false;
+                    Program.botConnected = false;
+                    break;
+                }
+                Input.BotWait(1000);
+                ConnectAttemps++;
 
+            }
+            if (Program.botConnected && Program.botRunning)
+            {
+                if (UseSync)
+                {
+                    Program.form.ApplyLog("Bot Sync is Enabled!");
+                }
+                Program.form.ApplyLog("Starting Bot in 5 Seconds...");
+                Input.SendButton(Button.B, 1000);
+                Input.SendButton(Button.B, 1000);
+                Input.SendButton(Button.B, 1000);
+            }
             while (Program.botRunning)
             {
                 try
                 {
-                  
-                    if (CurrentTrades >= ReconnectAfter || FirstStarted)
+
+                    if (CurrentTrades > ReconnectAfter || FirstStarted)
                     {
                         //Reconnect if disconnected
                         Program.form.ApplyLog("Auto Reconnect is enabled, reconnecting if disconnected...");
@@ -195,7 +211,7 @@ namespace SwitchPokeBot.Bot
                     Program.form.UpdateStatus("Disconnected! | Can't connect to Host!");
                 }
             }
-
+            Program.form.ApplyLog("Bot Stopped!");
 
         }
 

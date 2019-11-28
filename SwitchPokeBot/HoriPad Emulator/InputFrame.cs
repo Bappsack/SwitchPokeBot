@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SwitchPokeBot
 
@@ -35,13 +33,13 @@ namespace SwitchPokeBot
                 switch (kv[0])
                 {
                     case "P":
-                        frame.PressedButtons = (Button) int.Parse(kv[1]);
+                        frame.PressedButtons = (Button)int.Parse(kv[1]);
                         break;
                     case "R":
-                        frame.ReleasedButtons = (Button) int.Parse(kv[1]);
+                        frame.ReleasedButtons = (Button)int.Parse(kv[1]);
                         break;
                     case "D":
-                        frame.DPad = (DPad) int.Parse(kv[1]);
+                        frame.DPad = (DPad)int.Parse(kv[1]);
                         break;
                     case "LX":
                         frame.LeftX = byte.Parse(kv[1]);

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace SwitchPokeBot
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MetroFramework.Forms.MetroForm
     {
         private string comPort = string.Empty;
         public bool Use_YT_Countdown { get; set; }
@@ -14,10 +14,9 @@ namespace SwitchPokeBot
         public Form1()
         {
             InitializeComponent();
-
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void metroButton3_Click(object sender, EventArgs e)
         {
             RefreshCOMPorts();
         }
@@ -54,22 +53,22 @@ namespace SwitchPokeBot
                     this.Invoke(new Action<string>(UpdateStatus), new object[] { Text });
                     return;
                 }
-                label1.Text = $"Status: {Text}";
+                metroLabel8.Text = $"Status: {Text}";
             }
             catch { }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void metroButton1_Click(object sender, EventArgs e)
         {
-            Use_YT_Countdown = checkBox2.Checked;
-            comPort = comboBox1.Text;
-            if (comPort != string.Empty && comboBox1.Items.Contains(comPort) && comPort.ToUpper().Contains("COM"))
+            Use_YT_Countdown = metroCheckBox2.Checked;
+            comPort = metroComboBox3.Text;
+            if (comPort != string.Empty && metroComboBox3.Items.Contains(comPort) && comPort.ToUpper().Contains("COM"))
             {
                 if (!Program.botRunning)
                 {
 
                     Program.botRunning = true;
-                    suprise.RunBot(comPort, Convert.ToInt32(comboBox2.Text), Convert.ToInt32(comboBox3.Text), checkBox2.Checked, checkBox1.Checked);
+                    suprise.RunBot(comPort, Convert.ToInt32(metroComboBox1.Text), Convert.ToInt32(metroComboBox1.Text), metroCheckBox2.Checked, metroCheckBox1.Checked);
                     ApplyLog($"Bot Started!");
                 }
                 else
@@ -85,12 +84,11 @@ namespace SwitchPokeBot
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void metroButton2_Click(object sender, EventArgs e)
         {
             if (Program.botRunning)
             {
                 Program.botRunning = false;
-                ApplyLog($"Bot Stopped!");
             }
             else
             {
@@ -101,11 +99,11 @@ namespace SwitchPokeBot
 
         private void RefreshCOMPorts()
         {
-            comboBox1.Items.Clear();
+            metroComboBox3.Items.Clear();
             foreach (var serialPort in SerialPort.GetPortNames())
             {
-                comboBox1.Items.Add(serialPort);
-                comboBox1.Text = serialPort;
+                metroComboBox3.Items.Add(serialPort);
+                metroComboBox3.Text = serialPort;
             }
             ApplyLog($"Found {SerialPort.GetPortNames().Length} Com Ports!");
 
@@ -118,30 +116,30 @@ namespace SwitchPokeBot
 
             for (int i = 1; i < 31; i++)
             {
-                comboBox2.Items.Add(i);
+                metroComboBox1.Items.Add(i);
             }
-            comboBox2.Text = "0";
+            metroComboBox1.Text = "0";
 
 
-            for (int i = 0; i < 961; i++)
+            for (int i = 1; i < 961; i++)
             {
-                comboBox3.Items.Add(i);
+                metroComboBox2.Items.Add(i);
             }
 
-            checkBox1.Checked = Properties.Settings.Default.ShowPokemon;
-            checkBox2.Checked = Properties.Settings.Default.UseSync;
-            comboBox2.Text = Properties.Settings.Default.StartSlot;
-            comboBox3.Text = Properties.Settings.Default.ReconnectAfter;
+            metroCheckBox1.Checked = Properties.Settings.Default.ShowPokemon;
+            metroCheckBox2.Checked = Properties.Settings.Default.UseSync;
+            metroComboBox1.Text = Properties.Settings.Default.StartSlot;
+            metroComboBox2.Text = Properties.Settings.Default.ReconnectAfter;
 
         }
 
         private void Form1_Closed(object sender, FormClosedEventArgs e)
         {
             ApplyLog("Saving...");
-            Properties.Settings.Default.UseSync = checkBox2.Checked;
-            Properties.Settings.Default.ShowPokemon = checkBox1.Checked;
-            Properties.Settings.Default.ReconnectAfter = comboBox3.Text;
-            Properties.Settings.Default.StartSlot = comboBox2.Text;
+            Properties.Settings.Default.UseSync = metroCheckBox2.Checked;
+            Properties.Settings.Default.ShowPokemon = metroCheckBox1.Checked;
+            Properties.Settings.Default.ReconnectAfter = metroComboBox2.Text;
+            Properties.Settings.Default.StartSlot = metroComboBox1.Text;
             Properties.Settings.Default.Save();
 
             Program.botRunning = false;
@@ -174,9 +172,11 @@ namespace SwitchPokeBot
             catch { }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void metroButton4_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
         }
+
+
     }
 }
