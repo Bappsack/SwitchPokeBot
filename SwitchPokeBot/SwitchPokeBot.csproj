@@ -5,6 +5,7 @@
     <TargetFramework>net48</TargetFramework>
     <StartupObject />
     <AssemblyName>Suprise_Trade_Bot</AssemblyName>
+    <ApplicationIcon>SwitchPokeBot.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

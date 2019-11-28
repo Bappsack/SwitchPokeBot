@@ -90,9 +90,9 @@ namespace SwitchPokeBot
             this.metroTabControl1.CustomBackground = true;
             this.metroTabControl1.Location = new System.Drawing.Point(13, 141);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 2;
+            this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Size = new System.Drawing.Size(419, 392);
-            this.metroTabControl1.TabIndex = 5;
+            this.metroTabControl1.TabIndex = 1;
             // 
             // metroTabPage1
             // 
