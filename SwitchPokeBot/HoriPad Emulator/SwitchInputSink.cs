@@ -131,19 +131,27 @@ namespace SwitchPokeBot
                     newFrame.Wait--;
                     Reset();
                 }
-
-                var resp = _serialPort.ReadByte();
-                if (resp == 0x92)
+                try
                 {
-                    Console.Error.WriteLine("NACK");
-                    if (!Sync())
+                    var resp = _serialPort.ReadByte();
+                    if (resp == 0x92)
                     {
-                        throw new Exception("Unable to sync after NACK");
+                        Console.Error.WriteLine("NACK");
+                        if (!Sync())
+                        {
+                            throw new Exception("Unable to sync after NACK");
+                        }
+                    }
+                    else if (resp != 0x90)
+                    {
+                        // Unknown response
                     }
                 }
-                else if (resp != 0x90)
+                catch
                 {
-                    // Unknown response
+                    Program.form.ApplyLog("Connection lost!");
+                    Program.botConnected = false;
+                    Program.botRunning = false;
                 }
                 Thread.Sleep(10);
             }

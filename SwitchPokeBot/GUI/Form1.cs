@@ -10,6 +10,7 @@ namespace SwitchPokeBot
         private string comPort = string.Empty;
         public bool Use_YT_Countdown { get; set; }
         private SwitchPokeBot.Bot.Suprise_Bot suprise = new Bot.Suprise_Bot();
+        private SwitchPokeBot.Bot.Link_Bot link = new Bot.Link_Bot();
 
         public Form1()
         {
@@ -126,10 +127,12 @@ namespace SwitchPokeBot
                 metroComboBox2.Items.Add(i);
             }
 
+          
             metroCheckBox1.Checked = Properties.Settings.Default.ShowPokemon;
             metroCheckBox2.Checked = Properties.Settings.Default.UseSync;
             metroComboBox1.Text = Properties.Settings.Default.StartSlot;
             metroComboBox2.Text = Properties.Settings.Default.ReconnectAfter;
+            metroTextBox1.Text = Properties.Settings.Default.LinkCode;
 
         }
 
@@ -140,6 +143,7 @@ namespace SwitchPokeBot
             Properties.Settings.Default.ShowPokemon = metroCheckBox1.Checked;
             Properties.Settings.Default.ReconnectAfter = metroComboBox2.Text;
             Properties.Settings.Default.StartSlot = metroComboBox1.Text;
+            Properties.Settings.Default.LinkCode = metroTextBox1.Text;
             Properties.Settings.Default.Save();
 
             Program.botRunning = false;
@@ -177,6 +181,37 @@ namespace SwitchPokeBot
             richTextBox1.Clear();
         }
 
+        private void metroButton6_Click(object sender, EventArgs e)
+        {
+            Use_YT_Countdown = metroCheckBox2.Checked;
+            comPort = metroComboBox3.Text;
+            if (comPort != string.Empty && metroComboBox3.Items.Contains(comPort) && comPort.ToUpper().Contains("COM"))
+            {
+                if (!Program.botRunning)
+                {
+                    if (metroTextBox1.Text.Length < 4 || metroTextBox1.Text != "0000")
+                    {
+                        Program.botRunning = true;
+                        link.RunBot(comPort, Convert.ToInt32(metroComboBox1.Text), Convert.ToInt32(metroComboBox1.Text), metroCheckBox2.Checked, metroTextBox1.Text);
+                        ApplyLog($"Bot Started!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid Link Code Selected!");
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Bot is already running!");
+                    return;
+                }
 
+            }
+            else
+            {
+                MessageBox.Show("No Port Selected!");
+            }
+        }
     }
 }

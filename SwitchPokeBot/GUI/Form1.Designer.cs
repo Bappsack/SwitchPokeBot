@@ -40,11 +40,6 @@ namespace SwitchPokeBot
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
-            this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
-            this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
-            this.metroButton4 = new MetroFramework.Controls.MetroButton();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
             this.metroPanel3 = new MetroFramework.Controls.MetroPanel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
@@ -55,22 +50,36 @@ namespace SwitchPokeBot
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroCheckBox2 = new MetroFramework.Controls.MetroCheckBox();
             this.metroCheckBox1 = new MetroFramework.Controls.MetroCheckBox();
+            this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
+            this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
+            this.metroButton4 = new MetroFramework.Controls.MetroButton();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.metroPanel4 = new MetroFramework.Controls.MetroPanel();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
             this.metroButton3 = new MetroFramework.Controls.MetroButton();
             this.metroComboBox3 = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
+            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
+            this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
+            this.metroButton5 = new MetroFramework.Controls.MetroButton();
+            this.metroButton6 = new MetroFramework.Controls.MetroButton();
+            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
-            this.metroTabPage3.SuspendLayout();
-            this.metroPanel5.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
             this.metroPanel3.SuspendLayout();
             this.metroPanel2.SuspendLayout();
+            this.metroTabPage3.SuspendLayout();
+            this.metroPanel5.SuspendLayout();
             this.metroPanel4.SuspendLayout();
+            this.metroTabPage4.SuspendLayout();
+            this.metroPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -85,12 +94,13 @@ namespace SwitchPokeBot
             // metroTabControl1
             // 
             this.metroTabControl1.Controls.Add(this.metroTabPage1);
+            this.metroTabControl1.Controls.Add(this.metroTabPage4);
             this.metroTabControl1.Controls.Add(this.metroTabPage2);
             this.metroTabControl1.Controls.Add(this.metroTabPage3);
             this.metroTabControl1.CustomBackground = true;
             this.metroTabControl1.Location = new System.Drawing.Point(13, 141);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
+            this.metroTabControl1.SelectedIndex = 1;
             this.metroTabControl1.Size = new System.Drawing.Size(419, 392);
             this.metroTabControl1.TabIndex = 1;
             // 
@@ -169,60 +179,6 @@ namespace SwitchPokeBot
             this.metroButton1.TabIndex = 6;
             this.metroButton1.Text = "Start";
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
-            // 
-            // metroTabPage3
-            // 
-            this.metroTabPage3.Controls.Add(this.metroPanel5);
-            this.metroTabPage3.HorizontalScrollbarBarColor = true;
-            this.metroTabPage3.Location = new System.Drawing.Point(4, 35);
-            this.metroTabPage3.Name = "metroTabPage3";
-            this.metroTabPage3.Size = new System.Drawing.Size(411, 353);
-            this.metroTabPage3.TabIndex = 2;
-            this.metroTabPage3.Text = "Log";
-            this.metroTabPage3.VerticalScrollbarBarColor = true;
-            // 
-            // metroPanel5
-            // 
-            this.metroPanel5.Controls.Add(this.metroButton4);
-            this.metroPanel5.Controls.Add(this.richTextBox1);
-            this.metroPanel5.Controls.Add(this.metroLabel9);
-            this.metroPanel5.HorizontalScrollbarBarColor = true;
-            this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel5.HorizontalScrollbarSize = 10;
-            this.metroPanel5.Location = new System.Drawing.Point(6, 5);
-            this.metroPanel5.Name = "metroPanel5";
-            this.metroPanel5.Size = new System.Drawing.Size(402, 345);
-            this.metroPanel5.TabIndex = 11;
-            this.metroPanel5.VerticalScrollbarBarColor = true;
-            this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel5.VerticalScrollbarSize = 10;
-            // 
-            // metroButton4
-            // 
-            this.metroButton4.Location = new System.Drawing.Point(3, 308);
-            this.metroButton4.Name = "metroButton4";
-            this.metroButton4.Size = new System.Drawing.Size(396, 23);
-            this.metroButton4.TabIndex = 12;
-            this.metroButton4.Text = "Clear Log";
-            this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(3, 27);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(396, 275);
-            this.richTextBox1.TabIndex = 11;
-            this.richTextBox1.Text = "";
-            // 
-            // metroLabel9
-            // 
-            this.metroLabel9.AutoSize = true;
-            this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel9.Location = new System.Drawing.Point(3, 9);
-            this.metroLabel9.Name = "metroLabel9";
-            this.metroLabel9.Size = new System.Drawing.Size(29, 15);
-            this.metroLabel9.TabIndex = 10;
-            this.metroLabel9.Text = "Log:";
             // 
             // metroTabPage2
             // 
@@ -340,6 +296,60 @@ namespace SwitchPokeBot
             this.metroCheckBox1.Text = "Use Bot Sync";
             this.metroCheckBox1.UseVisualStyleBackColor = true;
             // 
+            // metroTabPage3
+            // 
+            this.metroTabPage3.Controls.Add(this.metroPanel5);
+            this.metroTabPage3.HorizontalScrollbarBarColor = true;
+            this.metroTabPage3.Location = new System.Drawing.Point(4, 35);
+            this.metroTabPage3.Name = "metroTabPage3";
+            this.metroTabPage3.Size = new System.Drawing.Size(411, 353);
+            this.metroTabPage3.TabIndex = 2;
+            this.metroTabPage3.Text = "Log";
+            this.metroTabPage3.VerticalScrollbarBarColor = true;
+            // 
+            // metroPanel5
+            // 
+            this.metroPanel5.Controls.Add(this.metroButton4);
+            this.metroPanel5.Controls.Add(this.richTextBox1);
+            this.metroPanel5.Controls.Add(this.metroLabel9);
+            this.metroPanel5.HorizontalScrollbarBarColor = true;
+            this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel5.HorizontalScrollbarSize = 10;
+            this.metroPanel5.Location = new System.Drawing.Point(6, 5);
+            this.metroPanel5.Name = "metroPanel5";
+            this.metroPanel5.Size = new System.Drawing.Size(402, 345);
+            this.metroPanel5.TabIndex = 11;
+            this.metroPanel5.VerticalScrollbarBarColor = true;
+            this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel5.VerticalScrollbarSize = 10;
+            // 
+            // metroButton4
+            // 
+            this.metroButton4.Location = new System.Drawing.Point(3, 308);
+            this.metroButton4.Name = "metroButton4";
+            this.metroButton4.Size = new System.Drawing.Size(396, 23);
+            this.metroButton4.TabIndex = 12;
+            this.metroButton4.Text = "Clear Log";
+            this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(3, 27);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(396, 275);
+            this.richTextBox1.TabIndex = 11;
+            this.richTextBox1.Text = "";
+            // 
+            // metroLabel9
+            // 
+            this.metroLabel9.AutoSize = true;
+            this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel9.Location = new System.Drawing.Point(3, 9);
+            this.metroLabel9.Name = "metroLabel9";
+            this.metroLabel9.Size = new System.Drawing.Size(29, 15);
+            this.metroLabel9.TabIndex = 10;
+            this.metroLabel9.Text = "Log:";
+            // 
             // metroPanel4
             // 
             this.metroPanel4.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
@@ -394,6 +404,80 @@ namespace SwitchPokeBot
             this.metroLabel8.TabIndex = 10;
             this.metroLabel8.Text = "Status:";
             // 
+            // metroTabPage4
+            // 
+            this.metroTabPage4.Controls.Add(this.metroButton5);
+            this.metroTabPage4.Controls.Add(this.metroButton6);
+            this.metroTabPage4.Controls.Add(this.metroPanel6);
+            this.metroTabPage4.HorizontalScrollbarBarColor = true;
+            this.metroTabPage4.Location = new System.Drawing.Point(4, 35);
+            this.metroTabPage4.Name = "metroTabPage4";
+            this.metroTabPage4.Size = new System.Drawing.Size(411, 353);
+            this.metroTabPage4.TabIndex = 3;
+            this.metroTabPage4.Text = "Link Trade";
+            this.metroTabPage4.VerticalScrollbarBarColor = true;
+            // 
+            // metroPanel6
+            // 
+            this.metroPanel6.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
+            this.metroPanel6.Controls.Add(this.metroTextBox1);
+            this.metroPanel6.Controls.Add(this.metroLabel10);
+            this.metroPanel6.Controls.Add(this.metroLabel11);
+            this.metroPanel6.HorizontalScrollbarBarColor = true;
+            this.metroPanel6.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel6.HorizontalScrollbarSize = 10;
+            this.metroPanel6.Location = new System.Drawing.Point(6, 3);
+            this.metroPanel6.Name = "metroPanel6";
+            this.metroPanel6.Size = new System.Drawing.Size(200, 51);
+            this.metroPanel6.TabIndex = 10;
+            this.metroPanel6.VerticalScrollbarBarColor = true;
+            this.metroPanel6.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel6.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel10
+            // 
+            this.metroLabel10.AutoSize = true;
+            this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel10.Location = new System.Drawing.Point(3, 5);
+            this.metroLabel10.Name = "metroLabel10";
+            this.metroLabel10.Size = new System.Drawing.Size(58, 15);
+            this.metroLabel10.TabIndex = 9;
+            this.metroLabel10.Text = "Link Code:";
+            // 
+            // metroLabel11
+            // 
+            this.metroLabel11.AutoSize = true;
+            this.metroLabel11.Location = new System.Drawing.Point(3, 23);
+            this.metroLabel11.Name = "metroLabel11";
+            this.metroLabel11.Size = new System.Drawing.Size(95, 19);
+            this.metroLabel11.TabIndex = 8;
+            this.metroLabel11.Text = "Use the Code: ";
+            // 
+            // metroButton5
+            // 
+            this.metroButton5.Location = new System.Drawing.Point(227, 31);
+            this.metroButton5.Name = "metroButton5";
+            this.metroButton5.Size = new System.Drawing.Size(177, 23);
+            this.metroButton5.TabIndex = 12;
+            this.metroButton5.Text = "Stop";
+            // 
+            // metroButton6
+            // 
+            this.metroButton6.Location = new System.Drawing.Point(227, 3);
+            this.metroButton6.Name = "metroButton6";
+            this.metroButton6.Size = new System.Drawing.Size(177, 23);
+            this.metroButton6.TabIndex = 11;
+            this.metroButton6.Text = "Start";
+            this.metroButton6.Click += new System.EventHandler(this.metroButton6_Click);
+            // 
+            // metroTextBox1
+            // 
+            this.metroTextBox1.Location = new System.Drawing.Point(104, 19);
+            this.metroTextBox1.Name = "metroTextBox1";
+            this.metroTextBox1.Size = new System.Drawing.Size(75, 23);
+            this.metroTextBox1.TabIndex = 10;
+            this.metroTextBox1.Text = "1234";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -420,16 +504,19 @@ namespace SwitchPokeBot
             this.metroTabPage1.ResumeLayout(false);
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
-            this.metroTabPage3.ResumeLayout(false);
-            this.metroPanel5.ResumeLayout(false);
-            this.metroPanel5.PerformLayout();
             this.metroTabPage2.ResumeLayout(false);
             this.metroPanel3.ResumeLayout(false);
             this.metroPanel3.PerformLayout();
             this.metroPanel2.ResumeLayout(false);
             this.metroPanel2.PerformLayout();
+            this.metroTabPage3.ResumeLayout(false);
+            this.metroPanel5.ResumeLayout(false);
+            this.metroPanel5.PerformLayout();
             this.metroPanel4.ResumeLayout(false);
             this.metroPanel4.PerformLayout();
+            this.metroTabPage4.ResumeLayout(false);
+            this.metroPanel6.ResumeLayout(false);
+            this.metroPanel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,5 +556,12 @@ namespace SwitchPokeBot
         private MetroFramework.Controls.MetroButton metroButton4;
         private RichTextBox richTextBox1;
         private MetroFramework.Controls.MetroLabel metroLabel9;
+        private MetroFramework.Controls.MetroTabPage metroTabPage4;
+        private MetroFramework.Controls.MetroButton metroButton5;
+        private MetroFramework.Controls.MetroButton metroButton6;
+        private MetroFramework.Controls.MetroPanel metroPanel6;
+        private MetroFramework.Controls.MetroLabel metroLabel10;
+        private MetroFramework.Controls.MetroLabel metroLabel11;
+        private MetroFramework.Controls.MetroTextBox metroTextBox1;
     }
 }
