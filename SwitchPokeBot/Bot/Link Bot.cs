@@ -1,11 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SwitchPokeBot.Bot
 {
@@ -42,13 +38,12 @@ namespace SwitchPokeBot.Bot
         {
             // Start Horipad Emulator(InputRedirection)
 
-            string RegistyKey = "HKEY_CURRENT_USER\\SOFTWARE\\Mitsuki\\WTBots";
+            string RegistyKey = "HKEY_CURRENT_USER\\SOFTWARE\\Mitsuki\\LinkBots";
             string RegistyBotReadyCount = "BotsReadyCount";
             string RegistyBotCount = "BotsAmount";
             int Bots = 0;
             int BotsAmount = 0;
             bool FirstStarted = true;
-
             Input = new SwitchInputSink(Port);
             int ConnectAttemps = 0;
             while (!Program.botConnected)
@@ -80,7 +75,7 @@ namespace SwitchPokeBot.Bot
             {
                 try
                 {
-                    
+
                     if (CurrentTrades > ReconnectAfter || FirstStarted)
                     {
                         //Reconnect if disconnected
@@ -101,7 +96,7 @@ namespace SwitchPokeBot.Bot
                         CurrentTrades = 1;
                         FirstStarted = false;
                     }
-                    
+
 
                     Program.form.ApplyLog("Open Y-COM Menu");
                     Input.SendButton(Button.Y, 2000);
@@ -112,7 +107,7 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 1000);
                     Input.SendButton(Button.A, 1000);
                     Input.SendButton(Button.A, 1000);
-                    
+
                     Input.BotWait(3000);
                     Program.form.ApplyLog("Enter Code: " + LinkCode);
                     SelectTradeCode(LinkCode);
@@ -131,13 +126,16 @@ namespace SwitchPokeBot.Bot
                         // Increase BotReady Count
                         Program.form.ApplyLog("Waiting for other Bots...");
                         Bots++;
+                        
                         Registry.SetValue(RegistyKey, RegistyBotReadyCount, Bots.ToString(), RegistryValueKind.String);
 
 
                         while (Bots < BotsAmount)
                         {
+                            Thread.Sleep(new Random().Next(250, 1000));
                             // Get Registry Values for Bots
                             Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
+
                             BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
 
                             Program.form.UpdateStatus("Waiting for other Bots...");
@@ -145,7 +143,7 @@ namespace SwitchPokeBot.Bot
                         }
                         Program.form.ApplyLog("Bots are Ready!");
                     }
-                    Input.SendButton(Button.A, 1000);
+                    Input.SendButton(Button.A, (new Random().Next(500,1000) + 1000));
                     Program.form.ApplyLog("Wait 30 Seconds for Trainer...");
                     Input.BotWait(30000);
                     Program.form.ApplyLog("Potential Trainer Found!");
@@ -157,7 +155,10 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 2000);
                     Program.form.ApplyLog("Wait for User Input...");
 
-                    Input.BotWait(15000);
+                    for(int i = 0; i < 15; i++)
+                    {
+                        Input.SendButton(Button.A, 1000);
+                    }
 
                     Input.SendButton(Button.A, 3000);
                     Program.form.ApplyLog("Link Trade Started, wait 10 seconds, abort after 15 Seconds!");
@@ -233,7 +234,7 @@ namespace SwitchPokeBot.Bot
                 Input.SendDpad(DPad.Down, 100);
                 Input.SendDpad(DPad.Down, 100);
 
-                string[] CodeArray = Regex.Split(Code,string.Empty);
+                string[] CodeArray = Regex.Split(Code, string.Empty);
 
                 foreach (string c in CodeArray)
                 {

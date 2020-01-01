@@ -82,5 +82,17 @@ namespace SwitchPokeBot.Properties {
                 this["LinkCode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Com6")]
+        public string COMPort {
+            get {
+                return ((string)(this["COMPort"]));
+            }
+            set {
+                this["COMPort"] = value;
+            }
+        }
     }
 }

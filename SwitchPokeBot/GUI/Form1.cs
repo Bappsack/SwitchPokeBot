@@ -69,8 +69,8 @@ namespace SwitchPokeBot
                 {
 
                     Program.botRunning = true;
-                    suprise.RunBot(comPort, Convert.ToInt32(metroComboBox1.Text), Convert.ToInt32(metroComboBox1.Text), metroCheckBox2.Checked, metroCheckBox1.Checked);
-                    ApplyLog($"Bot Started!");
+                    suprise.RunBot(comPort, Convert.ToInt32(metroComboBox1.Text), Convert.ToInt32(metroComboBox1.Text), metroCheckBox1.Checked, metroCheckBox1.Checked);
+                    ApplyLog($"Suprise Trade Bot Started!");
                 }
                 else
                 {
@@ -127,13 +127,13 @@ namespace SwitchPokeBot
                 metroComboBox2.Items.Add(i);
             }
 
-          
+
             metroCheckBox1.Checked = Properties.Settings.Default.ShowPokemon;
             metroCheckBox2.Checked = Properties.Settings.Default.UseSync;
             metroComboBox1.Text = Properties.Settings.Default.StartSlot;
             metroComboBox2.Text = Properties.Settings.Default.ReconnectAfter;
             metroTextBox1.Text = Properties.Settings.Default.LinkCode;
-
+            metroComboBox1.Text = Properties.Settings.Default.COMPort;
         }
 
         private void Form1_Closed(object sender, FormClosedEventArgs e)
@@ -144,6 +144,7 @@ namespace SwitchPokeBot
             Properties.Settings.Default.ReconnectAfter = metroComboBox2.Text;
             Properties.Settings.Default.StartSlot = metroComboBox1.Text;
             Properties.Settings.Default.LinkCode = metroTextBox1.Text;
+            Properties.Settings.Default.COMPort = metroComboBox1.Text;
             Properties.Settings.Default.Save();
 
             Program.botRunning = false;
@@ -192,8 +193,8 @@ namespace SwitchPokeBot
                     if (metroTextBox1.Text.Length < 4 || metroTextBox1.Text != "0000")
                     {
                         Program.botRunning = true;
-                        link.RunBot(comPort, Convert.ToInt32(metroComboBox1.Text), Convert.ToInt32(metroComboBox1.Text), metroCheckBox2.Checked, metroTextBox1.Text);
-                        ApplyLog($"Bot Started!");
+                        link.RunBot(comPort, Convert.ToInt32(metroComboBox1.Text), Convert.ToInt32(metroComboBox1.Text), metroCheckBox1.Checked, metroTextBox1.Text);
+                        ApplyLog($"Link Trade Code Bot Started!");
                     }
                     else
                     {
