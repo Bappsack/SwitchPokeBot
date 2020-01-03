@@ -50,12 +50,12 @@ namespace SwitchPokeBot.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string StartSlot {
+        public string StartSlotSuprise {
             get {
-                return ((string)(this["StartSlot"]));
+                return ((string)(this["StartSlotSuprise"]));
             }
             set {
-                this["StartSlot"] = value;
+                this["StartSlotSuprise"] = value;
             }
         }
         
@@ -92,6 +92,18 @@ namespace SwitchPokeBot.Properties {
             }
             set {
                 this["COMPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string StartSlotLink {
+            get {
+                return ((string)(this["StartSlotLink"]));
+            }
+            set {
+                this["StartSlotLink"] = value;
             }
         }
     }

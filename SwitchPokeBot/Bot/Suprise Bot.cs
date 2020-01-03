@@ -44,6 +44,9 @@ namespace SwitchPokeBot.Bot
             int BotsAmount = 0;
             bool FirstStarted = true;
 
+            Program.form.ApplyLog($"Use Sync: {UseSync.ToString()} Reconnect After: {ReconnectAfter} Slot: {Slot} Show Pokemon: {ShowPokemon}");
+
+
             Input = new SwitchInputSink(Port);
             int ConnectAttemps = 0;
             while (!Program.botConnected)
@@ -137,7 +140,6 @@ namespace SwitchPokeBot.Bot
                             Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
                             BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
 
-                            Program.form.UpdateStatus("Waiting for other Bots...");
                             Input.BotWait(100);
                         }
                         Program.form.ApplyLog("Bots are Ready!");

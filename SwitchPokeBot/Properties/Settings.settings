@@ -8,7 +8,7 @@
     <Setting Name="ReconnectAfter" Type="System.String" Scope="User">
       <Value Profile="(Default)">15</Value>
     </Setting>
-    <Setting Name="StartSlot" Type="System.String" Scope="User">
+    <Setting Name="StartSlotSuprise" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="ShowPokemon" Type="System.Boolean" Scope="User">
@@ -19,6 +19,9 @@
     </Setting>
     <Setting Name="COMPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">Com6</Value>
+    </Setting>
+    <Setting Name="StartSlotLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>
