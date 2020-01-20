@@ -106,5 +106,17 @@ namespace SwitchPokeBot.Properties {
                 this["StartSlotLink"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsGerman {
+            get {
+                return ((bool)(this["IsGerman"]));
+            }
+            set {
+                this["IsGerman"] = value;
+            }
+        }
     }
 }

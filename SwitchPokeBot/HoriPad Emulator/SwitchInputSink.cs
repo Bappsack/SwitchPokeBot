@@ -108,7 +108,13 @@ namespace SwitchPokeBot
 
         public void Stop()
         {
-            _serialPort.Close();
+            try
+            {
+                Program.botRunning = false;
+                Program.botConnected = false;
+                _serialPort.Close();
+            }
+            catch { }
         }
 
         public void KeepAlive()
@@ -165,49 +171,70 @@ namespace SwitchPokeBot
 
         public void SendButton(Button button, int Delay)
         {
-            newFrame = new InputFrame();
-            newFrame.PressedButtons = button;
-            // newFrame.Wait = 1;
-            Update(newFrame);
-            BotWait(150);
-            newFrame.PressedButtons = Button.None;
-            newFrame.ReleasedButtons = Button.All;
-            Update(newFrame);
-            BotWait(Delay);
+            try
+            {
+                newFrame = new InputFrame();
+                newFrame.PressedButtons = button;
+                // newFrame.Wait = 1;
+                Update(newFrame);
+                BotWait(150);
+                newFrame.PressedButtons = Button.None;
+                newFrame.ReleasedButtons = Button.All;
+                Update(newFrame);
+                BotWait(Delay);
+            }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog(ex.Message);
+            }
         }
 
         public void SendDpad(DPad button, int Delay)
         {
-            if (Program.botRunning || _serialPort.IsOpen)
+            try
             {
-                newFrame = new InputFrame();
-                newFrame.DPad = button;
-                //newFrame.Wait = 1;
-                Update(newFrame);
-                BotWait(150);
-                newFrame.DPad = DPad.None;
-                Update(newFrame);
-                BotWait(Delay);
+                if (Program.botRunning || _serialPort.IsOpen)
+                {
+                    newFrame = new InputFrame();
+                    newFrame.DPad = button;
+                    //newFrame.Wait = 1;
+                    Update(newFrame);
+                    BotWait(150);
+                    newFrame.DPad = DPad.None;
+                    Update(newFrame);
+                    BotWait(Delay);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog(ex.Message);
             }
         }
 
         public void SendAnalog(Int32 LX, Int32 LY, Int32 RX, Int32 RY, int Delay)
         {
-            if (Program.botRunning || _serialPort.IsOpen)
+            try
             {
-                newFrame = new InputFrame();
-                newFrame.LeftX = (byte)LX;
-                newFrame.LeftY = (byte)LY;
-                newFrame.RightX = (byte)RX;
-                newFrame.RightY = (byte)RY;
-                Update(newFrame);
-                BotWait(new Random().Next(800, 1000));
-                newFrame.LeftX = 128;
-                newFrame.LeftY = 128;
-                newFrame.RightX = 128;
-                newFrame.RightY = 128;
-                Update(newFrame);
-                BotWait(Delay);
+                if (Program.botRunning || _serialPort.IsOpen)
+                {
+                    newFrame = new InputFrame();
+                    newFrame.LeftX = (byte)LX;
+                    newFrame.LeftY = (byte)LY;
+                    newFrame.RightX = (byte)RX;
+                    newFrame.RightY = (byte)RY;
+                    Update(newFrame);
+                    BotWait(new Random().Next(800, 1000));
+                    newFrame.LeftX = 128;
+                    newFrame.LeftY = 128;
+                    newFrame.RightX = 128;
+                    newFrame.RightY = 128;
+                    Update(newFrame);
+                    BotWait(Delay);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog(ex.Message);
             }
         }
 
@@ -215,18 +242,25 @@ namespace SwitchPokeBot
 
         public void Reset()
         {
-            var newFrame2 = new InputFrame
+            try
             {
-                PressedButtons = Button.None,
-                ReleasedButtons = Button.All,
-                DPad = DPad.None,
-                LeftX = 128,
-                LeftY = 128,
-                RightX = 128,
-                RightY = 128,
-            };
-            _queuedFrames = new ConcurrentQueue<InputFrame>();
-            Update(newFrame2);
+                var newFrame2 = new InputFrame
+                {
+                    PressedButtons = Button.None,
+                    ReleasedButtons = Button.All,
+                    DPad = DPad.None,
+                    LeftX = 128,
+                    LeftY = 128,
+                    RightX = 128,
+                    RightY = 128,
+                };
+                _queuedFrames = new ConcurrentQueue<InputFrame>();
+                Update(newFrame2);
+            }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog(ex.Message);
+            }
         }
 
         public void Update(InputFrame newFrame)
@@ -245,9 +279,16 @@ namespace SwitchPokeBot
 
         public void BotWait(int Delay)
         {
-            if (Program.botRunning)
+            try
             {
-                Thread.Sleep(Delay);
+                if (Program.botRunning)
+                {
+                    Thread.Sleep(Delay);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog(ex.Message);
             }
         }
 
@@ -328,15 +369,22 @@ namespace SwitchPokeBot
 
         private void ApplyFrameToState(InputFrame frame)
         {
-            _state = new SwitchInputState
+            try
             {
-                Buttons = (_state.Buttons | (frame.PressedButtons ?? Button.None)) & ~(frame.ReleasedButtons ?? Button.None), // & ~(Button.Home | Button.Share),
-                DPad = frame.DPad ?? _state.DPad,
-                LeftX = frame.LeftX ?? _state.LeftX,
-                LeftY = frame.LeftY ?? _state.LeftY,
-                RightX = frame.RightX ?? _state.RightX,
-                RightY = frame.RightY ?? _state.RightY
-            };
+                _state = new SwitchInputState
+                {
+                    Buttons = (_state.Buttons | (frame.PressedButtons ?? Button.None)) & ~(frame.ReleasedButtons ?? Button.None), // & ~(Button.Home | Button.Share),
+                    DPad = frame.DPad ?? _state.DPad,
+                    LeftX = frame.LeftX ?? _state.LeftX,
+                    LeftY = frame.LeftY ?? _state.LeftY,
+                    RightX = frame.RightX ?? _state.RightX,
+                    RightY = frame.RightY ?? _state.RightY
+                };
+            }
+            catch (Exception ex)
+            {
+                Program.form.ApplyLog(ex.Message);
+            }
         }
 
         private byte[] TranslateState(SwitchInputState state)

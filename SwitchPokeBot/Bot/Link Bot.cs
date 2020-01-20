@@ -16,11 +16,11 @@ namespace SwitchPokeBot.Bot
         private int ReconnectAfter { get; set; }
         private bool UseSync { get; set; }
         private string LinkCode { get; set; }
-
+        private bool IsGerman { get; set; }
 
         private SwitchInputSink Input;
 
-        public void RunBot(string port, int slot, int reconnectAfter, bool useSync, string linkCode)
+        public void RunBot(string port, int slot, int reconnectAfter, bool useSync, string linkCode, bool german)
         {
             Port = port;
             Slot = slot;
@@ -28,7 +28,7 @@ namespace SwitchPokeBot.Bot
             ReconnectAfter = reconnectAfter;
             UseSync = useSync;
             LinkCode = linkCode;
-
+            IsGerman = german;
             var worker = new Thread(Bot);
             worker.Start();
         }
@@ -51,7 +51,7 @@ namespace SwitchPokeBot.Bot
 
             while (!Program.botConnected)
             {
-                if (ConnectAttemps > 5)
+                if (ConnectAttemps >= 5)
                 {
                     Program.form.ApplyLog("Can't connect to Device!");
                     Program.form.UpdateStatus("Failed to connect to Console!");
@@ -110,9 +110,11 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 1000);
                     Input.SendButton(Button.A, 1000);
 
-                    /* German version only needs 3 A Presses?
-                    Input.SendButton(Button.A, 1000);
-                    */
+                    /* German version needs 3 A Presses? */
+                    if (IsGerman)
+                    {
+                        Input.SendButton(Button.A, 1000);
+                    }
 
                     Input.BotWait(3000);
                     Program.form.ApplyLog("Enter Code: " + LinkCode);
@@ -125,7 +127,7 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 2000);
                     Input.SendButton(Button.A, 2000);
                     Input.SendButton(Button.A, 2000);
-                    Thread.Sleep(new Random().Next(100, 300));
+                    Thread.Sleep(new Random().Next(100, 1000));
                     if (UseSync)
                     {
                         Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
@@ -136,7 +138,6 @@ namespace SwitchPokeBot.Bot
 
                         Registry.SetValue(RegistyKey, RegistyBotReadyCount, Bots.ToString(), RegistryValueKind.String);
 
-
                         while (Bots < BotsAmount)
                         {
                             try
@@ -145,13 +146,12 @@ namespace SwitchPokeBot.Bot
                                 Bots = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotReadyCount, 0).ToString());
 
                                 BotsAmount = Convert.ToInt16(Registry.GetValue(RegistyKey, RegistyBotCount, 0).ToString());
-
-                                Input.BotWait(100);
                             }
                             catch
                             {
                                 break;
                             }
+                            Thread.Sleep(100);
                         }
                         Program.form.ApplyLog("Bots are Ready!");
                     }
@@ -159,7 +159,7 @@ namespace SwitchPokeBot.Bot
 
                     Input.SendButton(Button.A, 1000);
                     Program.form.ApplyLog("Wait 30 Seconds for Trainer...");
-                    Input.BotWait(30000);
+                    Input.BotWait(40000);
                     Program.form.ApplyLog("Potential Trainer Found!");
 
                     Program.form.ApplyLog("Select Pokemon");
@@ -169,7 +169,7 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 2000);
                     Program.form.ApplyLog("Wait for User Input...");
 
-                    for (int i = 0; i < 15; i++)
+                    for (int i = 0; i < 25; i++)
                     {
                         Input.SendButton(Button.A, 1000);
                     }
@@ -184,11 +184,11 @@ namespace SwitchPokeBot.Bot
                     Input.SendButton(Button.A, 1500);
                     Program.form.ApplyLog("Wait 30 Seconds until Trade is finished...");
 
-                    Input.BotWait(30000 + new Random().Next(1000, 3000));
+                    Input.BotWait(30000 + new Random().Next(500, 5000));
 
                     Program.form.ApplyLog("Pokemon has been prolly arrived, bypass Trade Evolution...");
                     Input.SendButton(Button.Y, 1000);
-                    Input.BotWait(1000);
+                    Input.BotWait(1000 + new Random().Next(500,5000));
 
                     for (int i = 0; i < 10; i++)
                     {
@@ -227,6 +227,7 @@ namespace SwitchPokeBot.Bot
                     Program.form.ApplyLog("Bot lost connection to Host, check your cable connected!");
                     Program.form.UpdateStatus("Disconnected! | Can't connect to Host!");
                 }
+                Thread.Sleep(100);
             }
             Program.form.ApplyLog("Bot Stopped!");
 

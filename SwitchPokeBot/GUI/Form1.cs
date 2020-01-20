@@ -143,6 +143,7 @@ namespace SwitchPokeBot
             LinkCodeBox.Text = Properties.Settings.Default.LinkCode;
             Slot_SupriseTrade.Text = Properties.Settings.Default.COMPort;
             comPort_select.Text = Properties.Settings.Default.COMPort;
+            languageCheckBox.Checked = Properties.Settings.Default.IsGerman;
         }
 
         private void Form1_Closed(object sender, FormClosedEventArgs e)
@@ -155,6 +156,7 @@ namespace SwitchPokeBot
             Properties.Settings.Default.LinkCode = LinkCodeBox.Text;
             Properties.Settings.Default.COMPort = comPort_select.Text;
             Properties.Settings.Default.StartSlotLink = slot_Link.Text;
+            Properties.Settings.Default.IsGerman = languageCheckBox.Checked;
             Properties.Settings.Default.Save();
 
             Program.botRunning = false;
@@ -201,7 +203,7 @@ namespace SwitchPokeBot
                     if (LinkCodeBox.Text.Length < 4 || LinkCodeBox.Text != "0000")
                     {
                         Program.botRunning = true;
-                        link.RunBot(comPort, Convert.ToInt32(slot_Link.Text), Convert.ToInt32(reconnectAfter_combo.Text), UseSync.Checked, LinkCodeBox.Text);
+                        link.RunBot(comPort, Convert.ToInt32(slot_Link.Text), Convert.ToInt32(reconnectAfter_combo.Text), UseSync.Checked, LinkCodeBox.Text,languageCheckBox.Checked);
                         ApplyLog($"Link Trade Code Bot Started!");
                     }
                     else

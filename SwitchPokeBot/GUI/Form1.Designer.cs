@@ -41,6 +41,10 @@ namespace SwitchPokeBot
             this.btn_stop_Suprise = new MetroFramework.Controls.MetroButton();
             this.btn_Start_Suprise = new MetroFramework.Controls.MetroButton();
             this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
+            this.metroPanel7 = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.slot_Link = new MetroFramework.Controls.MetroComboBox();
             this.btn_stop_link = new MetroFramework.Controls.MetroButton();
             this.btn_start_link = new MetroFramework.Controls.MetroButton();
             this.metroPanel6 = new MetroFramework.Controls.MetroPanel();
@@ -68,15 +72,13 @@ namespace SwitchPokeBot
             this.btn_refresh = new MetroFramework.Controls.MetroButton();
             this.comPort_select = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
-            this.metroPanel7 = new MetroFramework.Controls.MetroPanel();
-            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
-            this.slot_Link = new MetroFramework.Controls.MetroComboBox();
+            this.languageCheckBox = new MetroFramework.Controls.MetroCheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
             this.metroTabPage4.SuspendLayout();
+            this.metroPanel7.SuspendLayout();
             this.metroPanel6.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
             this.metroPanel3.SuspendLayout();
@@ -84,7 +86,6 @@ namespace SwitchPokeBot
             this.metroTabPage3.SuspendLayout();
             this.metroPanel5.SuspendLayout();
             this.metroPanel4.SuspendLayout();
-            this.metroPanel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -105,7 +106,7 @@ namespace SwitchPokeBot
             this.metroTabControl1.CustomBackground = true;
             this.metroTabControl1.Location = new System.Drawing.Point(13, 141);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 1;
+            this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Size = new System.Drawing.Size(419, 392);
             this.metroTabControl1.TabIndex = 1;
             // 
@@ -198,6 +199,51 @@ namespace SwitchPokeBot
             this.metroTabPage4.TabIndex = 3;
             this.metroTabPage4.Text = "Link Trade";
             this.metroTabPage4.VerticalScrollbarBarColor = true;
+            // 
+            // metroPanel7
+            // 
+            this.metroPanel7.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
+            this.metroPanel7.Controls.Add(this.metroLabel12);
+            this.metroPanel7.Controls.Add(this.metroLabel13);
+            this.metroPanel7.Controls.Add(this.slot_Link);
+            this.metroPanel7.HorizontalScrollbarBarColor = true;
+            this.metroPanel7.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel7.HorizontalScrollbarSize = 10;
+            this.metroPanel7.Location = new System.Drawing.Point(6, 60);
+            this.metroPanel7.Name = "metroPanel7";
+            this.metroPanel7.Size = new System.Drawing.Size(200, 51);
+            this.metroPanel7.TabIndex = 13;
+            this.metroPanel7.VerticalScrollbarBarColor = true;
+            this.metroPanel7.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel7.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel12.Location = new System.Drawing.Point(3, 5);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(80, 15);
+            this.metroLabel12.TabIndex = 9;
+            this.metroLabel12.Text = "Trade Settings:";
+            // 
+            // metroLabel13
+            // 
+            this.metroLabel13.AutoSize = true;
+            this.metroLabel13.Location = new System.Drawing.Point(3, 23);
+            this.metroLabel13.Name = "metroLabel13";
+            this.metroLabel13.Size = new System.Drawing.Size(103, 19);
+            this.metroLabel13.TabIndex = 8;
+            this.metroLabel13.Text = "Start from Slot: ";
+            // 
+            // slot_Link
+            // 
+            this.slot_Link.FormattingEnabled = true;
+            this.slot_Link.ItemHeight = 23;
+            this.slot_Link.Location = new System.Drawing.Point(112, 15);
+            this.slot_Link.Name = "slot_Link";
+            this.slot_Link.Size = new System.Drawing.Size(74, 29);
+            this.slot_Link.TabIndex = 8;
             // 
             // btn_stop_link
             // 
@@ -332,6 +378,7 @@ namespace SwitchPokeBot
             this.metroPanel2.AccessibleDescription = "";
             this.metroPanel2.AccessibleName = "";
             this.metroPanel2.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
+            this.metroPanel2.Controls.Add(this.languageCheckBox);
             this.metroPanel2.Controls.Add(this.metroLabel2);
             this.metroPanel2.Controls.Add(this.showPokemon);
             this.metroPanel2.Controls.Add(this.UseSync);
@@ -340,7 +387,7 @@ namespace SwitchPokeBot
             this.metroPanel2.HorizontalScrollbarSize = 10;
             this.metroPanel2.Location = new System.Drawing.Point(6, 13);
             this.metroPanel2.Name = "metroPanel2";
-            this.metroPanel2.Size = new System.Drawing.Size(130, 81);
+            this.metroPanel2.Size = new System.Drawing.Size(130, 109);
             this.metroPanel2.TabIndex = 8;
             this.metroPanel2.VerticalScrollbarBarColor = true;
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
@@ -359,7 +406,7 @@ namespace SwitchPokeBot
             // showPokemon
             // 
             this.showPokemon.AutoSize = true;
-            this.showPokemon.Location = new System.Drawing.Point(12, 55);
+            this.showPokemon.Location = new System.Drawing.Point(12, 53);
             this.showPokemon.Name = "showPokemon";
             this.showPokemon.Size = new System.Drawing.Size(106, 15);
             this.showPokemon.TabIndex = 8;
@@ -484,50 +531,15 @@ namespace SwitchPokeBot
             this.metroLabel8.TabIndex = 10;
             this.metroLabel8.Text = "Status:";
             // 
-            // metroPanel7
+            // languageCheckBox
             // 
-            this.metroPanel7.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
-            this.metroPanel7.Controls.Add(this.metroLabel12);
-            this.metroPanel7.Controls.Add(this.metroLabel13);
-            this.metroPanel7.Controls.Add(this.slot_Link);
-            this.metroPanel7.HorizontalScrollbarBarColor = true;
-            this.metroPanel7.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel7.HorizontalScrollbarSize = 10;
-            this.metroPanel7.Location = new System.Drawing.Point(6, 60);
-            this.metroPanel7.Name = "metroPanel7";
-            this.metroPanel7.Size = new System.Drawing.Size(200, 51);
-            this.metroPanel7.TabIndex = 13;
-            this.metroPanel7.VerticalScrollbarBarColor = true;
-            this.metroPanel7.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel7.VerticalScrollbarSize = 10;
-            // 
-            // metroLabel12
-            // 
-            this.metroLabel12.AutoSize = true;
-            this.metroLabel12.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel12.Location = new System.Drawing.Point(3, 5);
-            this.metroLabel12.Name = "metroLabel12";
-            this.metroLabel12.Size = new System.Drawing.Size(80, 15);
-            this.metroLabel12.TabIndex = 9;
-            this.metroLabel12.Text = "Trade Settings:";
-            // 
-            // metroLabel13
-            // 
-            this.metroLabel13.AutoSize = true;
-            this.metroLabel13.Location = new System.Drawing.Point(3, 23);
-            this.metroLabel13.Name = "metroLabel13";
-            this.metroLabel13.Size = new System.Drawing.Size(103, 19);
-            this.metroLabel13.TabIndex = 8;
-            this.metroLabel13.Text = "Start from Slot: ";
-            // 
-            // slot_Link
-            // 
-            this.slot_Link.FormattingEnabled = true;
-            this.slot_Link.ItemHeight = 23;
-            this.slot_Link.Location = new System.Drawing.Point(112, 15);
-            this.slot_Link.Name = "slot_Link";
-            this.slot_Link.Size = new System.Drawing.Size(74, 29);
-            this.slot_Link.TabIndex = 8;
+            this.languageCheckBox.AutoSize = true;
+            this.languageCheckBox.Location = new System.Drawing.Point(12, 74);
+            this.languageCheckBox.Name = "languageCheckBox";
+            this.languageCheckBox.Size = new System.Drawing.Size(103, 15);
+            this.languageCheckBox.TabIndex = 10;
+            this.languageCheckBox.Text = "German? (Link)";
+            this.languageCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -556,6 +568,8 @@ namespace SwitchPokeBot
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
             this.metroTabPage4.ResumeLayout(false);
+            this.metroPanel7.ResumeLayout(false);
+            this.metroPanel7.PerformLayout();
             this.metroPanel6.ResumeLayout(false);
             this.metroPanel6.PerformLayout();
             this.metroTabPage2.ResumeLayout(false);
@@ -568,8 +582,6 @@ namespace SwitchPokeBot
             this.metroPanel5.PerformLayout();
             this.metroPanel4.ResumeLayout(false);
             this.metroPanel4.PerformLayout();
-            this.metroPanel7.ResumeLayout(false);
-            this.metroPanel7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -620,5 +632,6 @@ namespace SwitchPokeBot
         private MetroFramework.Controls.MetroLabel metroLabel12;
         private MetroFramework.Controls.MetroLabel metroLabel13;
         private MetroFramework.Controls.MetroComboBox slot_Link;
+        private MetroFramework.Controls.MetroCheckBox languageCheckBox;
     }
 }
